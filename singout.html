@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Out - Cab Trip</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1e1a38, #0f2a46, #1e1a38);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s infinite ease-in-out;
+            color: white;
+            align-items: center; /* Center content vertically */
+            justify-content: center; /* Center content horizontally */
+        }
+
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .sign-out-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 600px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sign-out-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .sign-out-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .sign-out-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .sign-out-options button, .sign-out-options a {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sign-out-options button:hover, .sign-out-options a:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sign-out-options button.cancel {
+            background-color: #e74c3c;
+        }
+
+        .sign-out-options button.cancel:hover {
+            background-color: #c0392b;
+        }
+
+        /* Animation for buttons appearing */
+        .sign-out-options button:nth-child(1) { animation: slideInUp 0.5s ease forwards 0.2s; opacity: 0; }
+        .sign-out-options button:nth-child(2) { animation: slideInUp 0.5s ease forwards 0.4s; opacity: 0; }
+        .sign-out-options button:nth-child(3) { animation: slideInUp 0.5s ease forwards 0.6s; opacity: 0; }
+
+        @keyframes slideInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .additional-actions {
+            margin-top: 20px;
+        }
+
+        .additional-actions a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .additional-actions a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="sign-out-container">
+        <h2>Sign Out</h2>
+        <p>Are you sure you want to sign out?</p>
+
+        <div class="sign-out-options">
+            <button onclick="signOut()">Sign Out Completely</button>
+            <button class="cancel" onclick="goBack()">Cancel</button>
+             <a href="#">Switch to another account</a>
+        </div>
+         <div class="additional-actions">
+            <a href="#">Forgot Password?</a> | <a href="#">Need Help?</a>
+        </div>
+    </div>
+
+    <script>
+        function signOut() {
+            // Implement your sign-out logic here (e.g., clear cookies, redirect to login page)
+            alert("Signing out completely...");
+            window.location.href = "login.html"; // Example: Redirect to login page
+        }
+
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+    </script>
+</body>
+</html>

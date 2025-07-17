@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Cab Trip</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1e1a38, #0f2a46, #1e1a38);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s infinite ease-in-out;
+            color: white;
+        }
+
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        /* Main Content Styles */
+        main {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            flex: 1;
+            margin-left: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            backdrop-filter: blur(5px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-left: 0;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px; /* Adjust padding */
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .sidebar.open {
+                display: block;
+            }
+        }
+
+        .sidebar .logo-section {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .logo-section h2 {
+            margin-left: 10px;
+            font-size: 1.3rem;
+            color: #fff; /* Match text color */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 10px;
+            color: #fff; /* Icon Color */
+        }
+
+        .toggle-menu {
+            display: none;
+            margin-left: 10px;
+            cursor: pointer;
+            color: #3498db;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .toggle-menu {
+                display: block;
+            }
+        }
+
+        /* Trip Selection Styles */
+        Selection Styles */
+        .trip-details-header{
+                display: flex;
+               justify-content: space-between;
+                align-items: center;
+                width: 100%;
+               margin-bottom: 20px;
+          }
+            .trip-details-header input{
+               padding: 8px;
+             border-radius: 4px;
+                border: 1px solid #ddd;
+                color: #333;
+           }
+            .trip-details-header input:focus{
+                outline: none;
+                border-color: #3498db;
+            }
+            .trip-list{
+                 width: 100%;
+                 margin-bottom: 20px;
+            }
+            .trip-list ul{
+               list-style: none;
+                padding: 0;
+            }
+           .trip-list li{
+               padding: 10px;
+                border-bottom: 1px solid #555;
+                text-align: left;
+                cursor: pointer;
+           }
+           .trip-list li:hover{
+             background-color: rgba(255, 255, 255, 0.1);
+           }
+           .trip-summary {
+               padding: 15px;
+              background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(10px);
+                width: 100%;
+              margin-bottom: 10px;
+          }
+           .trip-summary h4{
+               margin-bottom: 10px;
+           }
+            .trip-summary p{
+              margin-bottom: 5px;
+          }
+           .map-container{
+                width: 100%;
+              height: 300px;
+               background-color: #ddd;
+                margin-bottom: 10px;
+               display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #555;
+                border-radius: 4px;
+           }
+           .invoice-actions {
+               display: flex;
+                justify-content: space-between;
+           }
+            .invoice-actions button{
+                 background-color: #2ecc71;
+                color: white;
+                 border: none;
+                padding: 10px 15px;
+                 cursor: pointer;
+                  font-size: 1rem;
+                border-radius: 4px;
+                  transition: background-color 0.3s;
+           }
+           .invoice-actions button:hover {
+               background-color: #27ae60;
+           }
+            .rating-section{
+                margin-top: 20px;
+                width: 100%;
+            }
+           .rating-section textarea{
+                width: 100%;
+                padding: 10px;
+                 margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background-color: transparent;
+                color: white;
+           }
+
+         /* Back Button Styles */
+        .back-button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .back-button:hover {
+            color: #ddd;
+        }
+
+          /* Support Page Styles */
+        .support-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .support-container h2 {
+            margin-bottom: 20px;
+        }
+
+        /*FAQ Styles*/
+        .faq-search {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+       .faq-search input{
+          width: 100%;
+          padding: 8px;
+           border-radius: 4px;
+           border: 1px solid #ddd;
+            color: #333;
+       }
+        .faq-section {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+         .faq-section h3{
+               display: flex;
+             align-items: center;
+             margin-bottom: 10px;
+         }
+          .faq-section h3 i{
+               margin-right: 8px;
+          }
+
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 5px;
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #555;
+        }
+
+        .faq-answer {
+            padding: 10px;
+           background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+             margin-bottom: 10px;
+            display: none; /*Hidden by default*/
+        }
+         .faq-answer.show {
+            display: block;
+        }
+        /*Additional Support Features*/
+        .additional-support{
+            margin-bottom: 20px;
+             width: 100%;
+        }
+        .additional-support h3{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .additional-support h3 i{
+            margin-right: 8px;
+        }
+        .video-gifs-section{
+            margin-bottom: 15px;
+        }
+        .troubleshooting-guide{
+            margin-bottom: 15px;
+        }
+        /*User Feedback Form*/
+        .feedback-form h3{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .feedback-form h3 i{
+            margin-right: 8px;
+        }
+        .feedback-form textarea{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: transparent;
+            color: white;
+        }
+         .feedback-form button{
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        /*Contact Section*/
+        .contact-section {
+            margin-bottom: 20px;
+             width: 100%;
+        }
+        .contact-section h3{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .contact-section h3 i{
+            margin-right: 8px;
+        }
+        .contact-section p {
+            margin-bottom: 5px;
+        }
+        /*Call Support Button*/
+        .call-support-button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+         /*Ai Chatbot*/
+        .ai-chatbot{
+            margin-bottom: 20px;
+             width: 100%;
+        }
+         .ai-chatbot h3{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .ai-chatbot h3 i{
+            margin-right: 8px;
+        }
+
+        /* Multilingual Support Section */
+        .multilingual-support {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .multilingual-support h3 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .multilingual-support h3 i {
+            margin-right: 8px;
+        }
+
+        .multilingual-support select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            color: #333;
+            background-color: white; /* Add background color */
+        }
+
+        .multilingual-support select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        /* Cab Assigned Today Styles */
+        .cab-assigned {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            width: 100%;
+        }
+
+        .cab-assigned h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .cab-assigned p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        .cab-assigned p span {
+            font-weight: 500;
+        }
+
+        /* Added for better text readability on background */
+        p, h1, h2, h3, h4, h5, h5, h6, label, a {
+            color: white;
+        }
+
+        /* Home Page Styles */
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .welcome-message {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .summary-card h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: white; /* Ensure the heading color is white */
+        }
+
+        /* "Book a Cab" button style */
+        .book-cab-button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .book-cab-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Help/Support section style */
+        .help-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .help-section a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .help-section a:hover {
+            text-decoration: underline;
+        }
+        /* Community Page Styles */
+        .community-container {
+.chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    height: 300px; /* Set an initial height */
+}
+        }
+        .user-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+.message {
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.message .user {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.message-input-area {
+    display: flex;
+    align-items: center;
+}
+
+.message-input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    color: #333;
+    background-color: white; /* Added white background for better visibility */
+}
+
+.send-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+/* Support Page Styles */
+.support-container {
+       display: flex;
+       flex-direction: column;
+       align-items: flex-start;
+       width: 100%;
+   }
+/* INSERT CSS CODE HERE*/
+
+    </style>
+    <script>
+        // JavaScript Functions
+        let username = "Student"; // Replace with actual username retrieval
+
+        // Define initial seat counts
+        let totalSeatsMorning = 0;
+        let totalSeatsEvening = 0;
+        let cabCapacity = 25; // Total seats
+
+        // Store checkbox state
+        let morningTripChecked = false;
+        let eveningTripChecked = false;
+
+        // Sample trip data
+        const tripsData = [
+            {
+                id: 'trip1',
+                date: 'Dec 24, 2023',
+                pickup: 'College Gate',
+                dropoff: 'Hostel',
+                distance: '5 km',
+                fare: '$12.50',
+                paymentMethod: 'Credit Card',
+                duration: '15 minutes'
+            },
+            {
+                id: 'trip2',
+                date: 'Dec 23, 2023',
+                pickup: 'Hostel',
+                dropoff: 'Library',
+                distance: '3 km',
+                fare: '$8.00',
+                paymentMethod: 'Debit Card',
+                duration: '10 minutes'
+            },
+            {
+                id: 'trip3',
+                date: 'Dec 22, 2023',
+                pickup: 'Library',
+                dropoff: 'College Gate',
+                distance: '5 km',
+                fare: '$12.50',
+                paymentMethod: 'Cash',
+                duration: '15 minutes'
+            }
+        ];
+
+        function toggleLeftMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function updateSeatCounts() {
+            const morningChecked = document.getElementById('morningTrip').checked;
+            const eveningChecked = document.getElementById('eveningTrip').checked;
+
+            totalSeatsMorning = morningChecked ? 1 : 0;  // Set to 1 if checked, 0 if not
+            totalSeatsEvening = eveningChecked ? 1 : 0;  // Set to 1 if checked, 0 if not
+
+            // Update stored checkbox state
+            morningTripChecked = morningChecked;
+            eveningTripChecked = eveningChecked;
+
+            showCabDetails(); // Re-render to display updated values
+        }
+
+        function showCommunityPage() {
+            }
+        function showUserPage() {
+            const container = document.querySelector('.container');
+
+            container.innerHTML = `
+                <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+                <div class="user-container">
+                    <h2><i class="fas fa-user"></i> User Profile</h2>
+                    <div class="profile-header">
+                        <img src="${userProfile.avatar}" alt="Profile Picture" class="profile-picture">
+                        <div class="profile-info">
+                            <p><strong>Name:</strong> <span id="userName">${userProfile.name}</span></p>
+                            <p><strong>Email:</strong> <span id="userEmail">${userProfile.email}</span></p>
+                        </div>
+                    </div>
+
+                    <h3>Edit Profile</h3>
+                    <form class="edit-profile-form">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" value="${userProfile.name}">
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="${userProfile.email}">
+
+                        <label for="avatar">Profile Picture URL:</label>
+                        <input type="url" id="avatar" name="avatar" value="${userProfile.avatar}">
+
+                        <button type="button" onclick="saveProfile()">Save Changes</button>
+                    </form>
+                </div>
+            `;
+            }
+            function toggleFAQ(faqId){
+    }
+
+        function showCabDetails() {
+            const container = document.querySelector('.container');
+
+            container.innerHTML = `
+                <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+                <div class="cab-assigned">
+                    <h3>Cab Assigned Today</h3>
+                    <p>Cab Number: <span>MH-01-AB-1234</span></p>
+                    <p>Driver Name: <span>John Doe</span></p>
+                    <p>Driver Contact: <span>+91 98765 43210</span></p>
+                    <h3>Trip Preference</h3>
+                    <label>
+                        Morning Trip:
+                        <input type="checkbox" id="morningTrip" onchange="updateSeatCounts()" ${morningTripChecked ? 'checked' : ''}>
+                    </label>
+                    <label>
+                        Evening Trip:
+                        <input type="checkbox" id="eveningTrip" onchange="updateSeatCounts()" ${eveningTripChecked ? 'checked' : ''}>
+                    </label>
+                    <h3>Additional Information</h3>
+                    <p>Number of Seats in the Bus: <span>${cabCapacity}</span></p>
+                    <p>Total Seats Occupied Today (Morning): <span>${totalSeatsMorning}</span></p>
+                    <p>Total Seats Occupied Today (Evening): <span>${totalSeatsEvening}</span></p>
+                </div>
+            `;
+        }
+
+        function startTyping() {
+  isTyping = true;
+  document.getElementById('typingIndicator').style.display = 'block';
+  // Simulate typing for 3 seconds
+  setTimeout(stopTyping, 3000);
+}
+
+function stopTyping() {
+  isTyping = false;
+  document.getElementById('typingIndicator').style.display = 'none';
+}
+function reactToMessage(button, reaction) {
+  button.textContent = reaction; // Just change the button text for now (simulation)
+}
+function pinMessage(messageText) {
+  pinnedMessage = { text: messageText };
+  showCommunityPage();
+}
+
+function unpinMessage() {
+  pinnedMessage = null;
+  showCommunityPage();
+}
+function mentionUser(username) {
+document.getElementById('messageInput').value += `@${username} `;
+}
+
+function showCommunityPage() {
+     const container = document.querySelector('.container');
+
+    let chatHTML = '';
+  if (pinnedMessage) {
+        chatHTML += `<div class="message pinned">
+                      <i class="fas fa-thumbtack"></i> Pinned: ${pinnedMessage.text}
+                      <button class="unpin-button" onclick="unpinMessage()">Unpin</button>
+                    </div>`;
+    }
+    chatMessages.forEach(message => {
+         const formattedTime = message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        chatHTML += `
+            <div class="message ${message.isMe ? 'me' : 'other'}">
+                <div class="message-header">
+                <img src="${message.avatar}" alt="Avatar" class="avatar">
+                    <span class="user">${message.user}:</span>
+                    <span class="timestamp">${formattedTime}</span>
+                    <div class="message-actions">
+                          <button class="pin-button" onclick="pinMessage('${message.text}')"><i class="fas fa-thumbtack"></i></button>
+                           <button class = "mention-button" onclick = "mentionUser('${message.user}')"><i class = "fas fa-at"></i></button>
+
+                    </div>
+                </div>
+                ${message.text}
+                 <div class="reactions">
+                     <button onclick="reactToMessage(this, '👍')">👍</button>
+                     <button onclick="reactToMessage(this, '❤️')">❤️</button>
+                      <button onclick="reactToMessage(this, '😂')">😂</button>
+                 </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = `
+        <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <div class="community-container">
+            <h2><i class="fas fa-users"></i> Community Chat</h2>
+            <div class="chat-area" id="chatArea">
+                ${chatHTML}
+                <div class="typing-indicator" id="typingIndicator" style="display:none;">Typing...</div>
+            </div>
+            <div class="message-input-area">
+                <input type="text" class="message-input" id="messageInput" placeholder="Type your message..." oninput="startTyping()" onblur="stopTyping()">
+                <button class="send-button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    `;
+
+    const chatArea = document.getElementById('chatArea');
+    chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function toggleFAQ(faqId) {
+    const faqAnswer = document.getElementById(faqId);
+    faqAnswer.classList.toggle('show');
+}
+
+        function showHomePage() {
+            const container = document.querySelector('.container');
+
+            container.innerHTML = `
+                <div class="home-container">
+                    <h2 class="welcome-message">Welcome, ${username}!</h2>
+
+                    <button class="book-cab-button">Book a Cab</button>
+
+                    <div class="summary-card">
+                        <h3>Upcoming Trip</h3>
+                        <p>Date: <span>2024-01-26</span></p>
+                        <p>Time: <span>07:30 AM</span></p>
+                        <p>Pickup: <span>Your Location</span></p>
+                        <p>Destination: <span>University</span></p>
+                    </div>
+
+                    <div class="help-section">
+                        <a href="#">FAQs</a> | <a href="#">Live Chat</a> | <a href="#">Support</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCabLocation() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.213771028665!2d-74.00622728454055!3d40.7145504793314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c8957%3A0x323554e95703b2ea!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1680798913931!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+        }
+
+        function showTripDetails() {
+            const container = document.querySelector('.container');
+
+            // Generate the trip list dynamically from the tripsData array
+            let tripListHTML = `<ul>`;
+            tripsData.forEach(trip => {
+                tripListHTML += `<li onclick="showTripSummary('${trip.id}')">${trip.id} - ${trip.date}</li>`;
+            });
+            tripListHTML += `</ul>`;
+
+            container.innerHTML = `
+                <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+                <div class = "trip-details-header">
+                    <h3>Your Ride History</h3>
+                    <input type = "text" placeholder="Search by Location">
+                </div>
+                <div class = "trip-list">
+                    ${tripListHTML}
+                </div>
+            `;
+        }
+
+        function showTripSummary(tripId) {
+            const container = document.querySelector('.container');
+
+            // Find the trip data based on the tripId
+            const trip = tripsData.find(trip => trip.id === tripId);
+
+            if (trip) {
+                container.innerHTML = `
+                    <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+                    <div class="trip-summary">
+                        <h4>Trip Summary - ${trip.id}</h4>
+                        <p>Pickup: ${trip.pickup}</p>
+                        <p>Dropoff: ${trip.dropoff}</p>
+                        <p>Distance Traveled: ${trip.distance}</p>
+                        <p>Total Fare: ${trip.fare}</p>
+                        <p>Payment Method: ${trip.paymentMethod}</p>
+                        <p>Ride Duration: ${trip.duration}</p>
+                        <div class="map-container">
+                            [Trip Route Visualization - Google Maps Placeholder]
+                        </div>
+                        <div class="invoice-actions">
+                            <button onclick="">Generate Invoice</button>
+                            <button onclick="">Email Invoice</button>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <h4>Rate Your Ride</h4>
+                        <textarea placeholder="Leave feedback for your driver"></textarea>
+                        <button>Submit Feedback</button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<p>Trip not found.</p>`;
+            }
+        }
+
+        function showSupportPage() {
+            const container = document.querySelector('.container');
+
+            container.innerHTML = `
+                <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+                <div class="support-container">
+                <h2><i class="fas fa-question-circle"></i> Support</h2>
+
+                <!-- Live Chat Support -->
+                <div class="live-chat">
+                    <h3><i class="fas fa-comments"></i> Live Chat</h3>
+                    <p>[Live Chat Widget Placeholder]</p>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h3><i class="fas fa-question"></i> Frequently Asked Questions</h3>
+                     <div class="faq-search">
+                       <input type="text" placeholder="Search FAQs...">
+                   </div>
+
+                    <div class="faq-question" onclick="toggleFAQ('faq1')">
+                        How do I book a cab?
+                    </div>
+                    <div class="faq-answer" id="faq1">
+                        You can book a cab by clicking on the "Book a Cab" button on the home page.
+                    </div>
+
+                    <div class="faq-question" onclick="toggleFAQ('faq2')">
+                        How do I view my trip history?
+                    </div>
+                    <div class="faq-answer" id="faq2">
+                        You can view your trip history by clicking on the "Trip Details" option in the sidebar.
+                    </div>
+
+                    <div class="faq-question" onclick="toggleFAQ('faq3')">
+                        How do I find my assigned cab?
+                    </div>
+                    <div class="faq-answer" id="faq3">
+                        You can find your assigned cab information by clicking on the "My Cab" option in the sidebar.
+                    </div>
+                </div>
+
+                <!-- Additional Support Features -->
+                <div class="additional-support">
+                    <h3><i class="fas fa-info-circle"></i> Additional Support</h3>
+                    <div class="video-gifs-section">
+                        <h4>Help Videos/GIFs</h4>
+                        <p>[Short clips explaining cab booking, trip details, etc.]</p>
+                    </div>
+                    <div class="troubleshooting-guide">
+                        <h4>Troubleshooting Guide</h4>
+                        <p>[Steps to follow if a user faces issues.]</p>
+                    </div>
+                </div>
+
+                <!-- User Feedback Form -->
+                <div class="feedback-form">
+                    <h3><i class="fas fa-comment-dots"></i> User Feedback Form</h3>
+                    <textarea placeholder="Rate our support and suggest improvements"></textarea>
+                    <button>Submit Feedback</button>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3><i class="fas fa-envelope"></i> Contact Us</h3>
+                    <p>Email: support@cabtrip.com</p>
+                    <p>Phone: +1-555-123-4567</p>
+                    <button class="call-support-button">Call Support</button>
+                </div>
+
+                  <!-- Multilingual Support -->
+                <div class="multilingual-support">
+                    <h3><i class="fas fa-globe"></i> Multilingual Support</h3>
+                    <select>
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                </div>
+
+                 <!-- AI Chatbot Integration -->
+                <div class="ai-chatbot">
+                    <h3><i class="fas fa-robot"></i> AI Chatbot</h3>
+                    <p>[AI Chatbot Integration Placeholder]</p>
+                </div>
+
+            `;
+        }
+
+        function toggleFAQ(faqId) {
+            const faqAnswer = document.getElementById(faqId);
+            faqAnswer.classList.toggle('show');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Function to reset seat counts
+        function resetDaily() {
+            totalSeatsMorning = 0;
+            totalSeatsEvening = 0;
+            // Reset checkboxes (important!)
+            let morningCheckbox = document.getElementById('morningTrip');
+            let eveningCheckbox = document.getElementById('morningTrip');
+
+            if (morningCheckbox) {
+                morningCheckbox.checked = false;
+            }
+            if (eveningCheckbox) {
+               eveningCheckbox.checked = false;
+            }
+
+            if (window.location.hash === '#cabDetails') {
+                showCabDetails(); // Re-render to show reset counts
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set the initial content to the home page
+            window.location.hash = '#home'; // Set the hash to #home
+            showHomePage(); // Initially show the home page
+
+            // Add event listener for hash changes
+            window.addEventListener('hashchange', () => {
+                switch (window.location.hash) {
+                    case '#home':
+                        showHomePage();
+                        break;
+                    case '#cabDetails':
+                        showCabDetails();
+                        break;
+                    case '#cabLocation':
+                        showCabLocation();
+                        break;
+                    case '#tripDetails':
+                        showTripDetails();
+                        break;
+                    case '#support':
+                        showSupportPage();
+                        break;
+                    default:
+                        showHomePage();
+                        break;
+                        case '#community':
+            showCommunityPage();
+            break;
+                 case '#user':
+                     showUserPage();
+                     break;
+                }
+            });
+            function showCommunityPage() {
+    const container = document.querySelector('.container');
+
+    let userProfile = {
+            name: "Student",
+            email: "student@example.com",
+            avatar: "https://via.placeholder.com/100"
+        };
+
+    let chatHTML = '';
+    chatMessages.forEach(message => {
+        chatHTML += `<div class="message"><span class="user">${message.user}:</span> ${message.text}</div>`;
+    });
+
+    container.innerHTML = `
+        <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <div class="community-container">
+            <h2><i class="fas fa-users"></i> Community Chat</h2>
+            <div class="chat-area" id="chatArea">
+                ${chatHTML}
+            </div>
+            <div class="message-input-area">
+                <input type="text" class="message-input" id="messageInput" placeholder="Type your message...">
+                <button class="send-button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    `;
+    const chatArea = document.getElementById('chatArea');
+    chatArea.scrollTop = chatArea.scrollHeight; // Scroll to bottom
+}
+
+let chatMessages = [
+            { user: "Other User", text: "Hey there!", timestamp: new Date(), isMe: false, avatar: "https://via.placeholder.com/30" },
+            { user: "You", text: "Hello!", timestamp: new Date(), isMe: true, avatar: "https://via.placeholder.com/30" }
+        ];
+function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const messageText = messageInput.value.trim();
+
+    if (messageText !== '') {
+        const newMessage = {
+            user: username,
+            text: messageText
+        };
+        chatMessages.push(newMessage);
+        messageInput.value = ''; // Clear the input
+
+        showCommunityPage(); // Refresh the Community page
+    }
+}
+
+            // Attempt to set daily reset (see important considerations below)
+            // This will NOT work reliably in a browser-only environment.
+            const now = new Date();
+            const millisTill2AM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 2, 0, 0, 0) - now;  // Calculate milliseconds until 2 AM
+
+            if (millisTill2AM < 0) {
+                millisTill2AM += 86400000; // it's after 2am, try 2am tomorrow.
+            }
+
+            setTimeout(resetDaily, millisTill2AM);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h2>Cab Trip</h2>
+    </header>
+    <div class="sidebar">
+        <div class="logo-section">
+            <i class="fas fa-desktop" style="font-size: 1.5rem;"></i>
+            <h2>Cab Trip</h2>
+        </div>
+        <ul>
+            <li>
+                <a href="#home" onclick="showHomePage()"><i class="fas fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#cabDetails" onclick="showCabDetails()"><i class="fas fa-taxi"></i>My Cab</a>
+            </li>
+            <li>
+                <a href="#cabLocation" onclick="showCabLocation()"><i class="fas fa-map-marker-alt"></i>Cab Location</a>
+            </li>
+            <li>
+                <a href="#tripDetails" onclick="showTripDetails()"><i class="fas fa-route"></i>Trip Details</a>
+            </li>
+            <li>
+                <a href="#support" onclick="showSupportPage()"><i class="fas fa-question-circle"></i>Support</a>
+            </li>
+            <li>
+                <a href="#community" onclick="showCommunityPage()"><i class="fas fa-users"></i>Community</a>
+            </li>  
+            <li>
+                <a href="#user" onclick="showUserPage()"><i class="fas fa-user"></i>User</a>
+            </li>
+            
+             <li>
+                <a href="#"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
+            </li>
+            
+        
+        </ul>
+    </div>
+    <main>
+        <span class="toggle-menu" onclick="toggleLeftMenu()">☰</span>
+        <div class="container">
+            <!-- Content will be dynamically updated here -->
+        </div>
+    </main>
+</body>
+</html>
